@@ -1,7 +1,19 @@
+/*
+ * SUMMARY: This file acts as the entry point for our web front end.
+ * 
+ * The esqueet app itself is using the MVC pattern so its views are found
+ * in the /views folder.  Shared components are in the /components folder.
+ * Business logic are handled by the controllers in the (you guessed it)
+ * /controllers folder.
+ * 
+ * Since the data models are shared, they will be found up a folder, over
+ * in the ../models folder.
+ */
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
+// TODO: These views should be called in by their controllers, not by the main app.
 import UserCreateView from './views/user.create';
 import UserEditView from './views/user.edit';
 import FoodCreateView from './views/food.create';
@@ -29,6 +41,7 @@ class App extends Component {
             </div>
           </nav> <br/>
           <h2>Esqueet: Come on everybody just PICK a place to eat!</h2> <br/>
+          { /* TODO: Change the below <Switch> to change which controller the app uses, not which view. */ }
           <Switch>
             <Route exact path='/profile/new' component={ UserCreateView } />
             <Route path='/profile/edit/:id' component={ UserEditView } />
