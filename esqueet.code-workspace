@@ -8,9 +8,6 @@
 		},
 		{
 			"path": "api"
-		},
-		{
-			"path": "models"
 		}
 	]
 }

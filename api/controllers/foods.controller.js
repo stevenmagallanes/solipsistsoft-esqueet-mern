@@ -1,23 +1,27 @@
-const express = require('express');
-const foodRoutes = express.Router();
+let Food = require('../models/foods.model');
 
-let foods = require('../../models/foods.model');
+// create new food
+exports.new = function(req, res){
+    let food = new Food(req.body);
+    
+    food.Name = req.body.Name;
+    // TODO: Check for dulicate food names and throw error
 
-// store route
-foodRoutes.route('/add').post(function(req, res){
-    let food = new food(req.body);
-    food.save()
-        .then(food => {
-            res.status(200).json({'food': 'food in added successfully'});
-        })
-        .catch(err =>{
-            res.status(400).send("unable to save to database");
-        });
-});
+    food.IsActive = true; // Default to active state
+    food.save((err, doc) => {
+        if(err){
+            res.status(400).send("Unable to save food to database: " + err);
+        }
+        else
+        {
+            res.status(200).json({'food': 'Food [' + doc.Name + '] added successfully'});
+        }
+    });
+};
 
-// get data (index) route
-foodRoutes.route('/').get(function(req, res){
-    foods.find(function(err, foods){
+// get all foods
+exports.index = function(req, res){
+    Food.find({IsActive: true}, function(err, foods){
         if(err){
             console.log(err);
         }
@@ -25,12 +29,12 @@ foodRoutes.route('/').get(function(req, res){
             res.json(foods);
         }
     });
-});
+};
 
-// edit route
-foodRoutes.route('/edit/:id').get(function(req, res){
+// get individual food
+exports.view = function(req, res){
     let id = req.params.id;
-    foods.findById(id, function(err, food){
+    Food.findById(id, function(err, food){
         if(err){
             console.log(err);
         }
@@ -38,32 +42,34 @@ foodRoutes.route('/edit/:id').get(function(req, res){
             res.json(food);
         }
     });
-});
+};
 
-// update route
-foodRoutes.route('/update/:id').post(function (req, res){
-    foods.findById(req.params.id, function(err, food){
+// update food
+exports.update = function (req, res){
+    Food.findById(req.params.id, function(err, food){
         if(!food)
             res.status(404).send("data is not found");
         else {
-            food.name = req.body.food_name;
+            food.Name = req.body.Name;
 
-            food.save().then(food=> {
-                res.json('Update complete');
-            })
-            .catch(err => {
-                res.status(400).send("unable to update the database");
+            food.save(err => {
+                if(err) res.status(400).send("Unable to save food to database: " + err);
+                else res.json('Update complete');
             });
         }
     });
-});
+};
 
-// delete route
-foodRoutes.route('/delete/:id').get(function(req, res){
-    foods.findByIdAndRemove({_id: req.params.id}, function(err, food){
+// delete food
+exports.delete = function(req, res){
+    Food.findById({_id: req.params.id}, function(err, food){
         if(err) res.json(err);
-        else res.json("Successfully removed");
+        else {
+            food.IsActive = false;
+            food.save().then(food=> {
+                res.json("Successfully removed");
+            })
+        }
     });
-});
+};
 
-module.exports = foodRoutes;

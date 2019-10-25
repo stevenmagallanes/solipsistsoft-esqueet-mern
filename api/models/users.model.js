@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
-mongoose.set('debug', function(coll, method, query, doc){
-    console.log(coll);
-});
+const uniqueValidator = require('mongoose-unique-validator');
+
+// mongoose.set('debug', function(coll, method, query, doc){
+//     console.log('Mongoose called - [Collection: ' + coll + '] - [Method: ' + method + '] - [Query: ' + query + '] - [Document: ' + doc + ']');
+// });
 
 const Schema = mongoose.Schema;
 const foods = require('./foods.model');
@@ -9,7 +11,8 @@ const foods = require('./foods.model');
 let UserSchema = new Schema({
     UserName: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     PassSalt: String,
     PassHash: String,
@@ -24,6 +27,7 @@ let UserSchema = new Schema({
 },{
     collection: 'users'
 });
+UserSchema.plugin(uniqueValidator);
 
 var User = module.exports = mongoose.model('User', UserSchema);
 

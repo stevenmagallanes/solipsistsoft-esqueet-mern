@@ -1,23 +1,25 @@
-const express = require('express');
-const placeRoutes = express.Router();
+let Place = require('../models/places.model');
 
-let places = require('../../models/places.model');
+// create new place
+exports.new = function(req, res){
+    let place = new Place(req.body);
+    // TODO: Check for dulicate place names and throw error
+    place.Name = req.body.Name;
 
-// store route
-placeRoutes.route('/add').post(function(req, res){
-    let place = new place(req.body);
-    place.save()
-        .then(place => {
-            res.status(200).json({'place': 'place in added successfully'});
-        })
-        .catch(err =>{
-            res.status(400).send("unable to save to database");
-        });
-});
+    place.save(function(err, doc){
+        if(err){
+            res.status(400).send("Unable to save place to database: " + err);
+        }
+        else
+        {
+            res.status(200).json({'place': 'Place [' + place.Name + '] added successfully'});
+        }
+    });
+};
 
-// get data (index) route
-placeRoutes.route('/').get(function(req, res){
-    places.find(function(err, places){
+// get all places
+exports.index = function(req, res){
+    Place.find(function(err, places){
         if(err){
             console.log(err);
         }
@@ -25,12 +27,12 @@ placeRoutes.route('/').get(function(req, res){
             res.json(places);
         }
     });
-});
+};
 
-// edit route
-placeRoutes.route('/edit/:id').get(function(req, res){
+// get individual place
+exports.view = function(req, res){
     let id = req.params.id;
-    places.findById(id, function(err, place){
+    Place.findById(id, function(err, place){
         if(err){
             console.log(err);
         }
@@ -38,15 +40,19 @@ placeRoutes.route('/edit/:id').get(function(req, res){
             res.json(place);
         }
     });
-});
+};
 
-// update route
-placeRoutes.route('/update/:id').post(function (req, res){
-    places.findById(req.params.id, function(err, place){
+// update place
+exports.update = function (req, res){
+    Place.findById(req.params.id, function(err, place){
         if(!place)
             res.status(404).send("data is not found");
         else {
-            //place.name = req.body.place_name;
+            place.Name = req.body.Name;
+
+            // TODO: Implement SelectList component and use data to update food preferences
+
+            // NOTE: No need to update the "IsActive" field here just yet.
 
             place.save().then(place=> {
                 res.json('Update complete');
@@ -56,14 +62,19 @@ placeRoutes.route('/update/:id').post(function (req, res){
             });
         }
     });
-});
+};
 
-// delete route
-placeRoutes.route('/delete/:id').get(function(req, res){
-    places.findByIdAndRemove({_id: req.params.id}, function(err, place){
+// delete place
+exports.delete = function(req, res){
+    Place.findById({_id: req.params.id}, function(err, place){
         if(err) res.json(err);
-        else res.json("Successfully removed");
+        else {
+            place.IsActive = false;
+            place.save().then(place=> {
+                res.json("Successfully removed");
+            })
+        }
     });
-});
+};
 
-module.exports = placeRoutes;
+
