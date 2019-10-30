@@ -13,7 +13,10 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
+import Loading from './components/loading.component';
+
 // TODO: These views should be called in by their controllers, not by the main app.
+import HomeView from './views/home';
 import UserCreateView from './views/user.create';
 import UserEditView from './views/user.edit';
 import FoodCreateView from './views/food.create';
@@ -34,15 +37,13 @@ class App extends Component {
                 <li className="nav-item">
                   <Link to={'/create'} className="nav-link">Create</Link>
                 </li>
-                <li className="nav-item">
-                  <Link to={'/index'} className="nav-link">Index</Link>
-                </li>
               </ul>
             </div>
           </nav> <br/>
           <h2>Esqueet: Come on everybody just PICK a place to eat!</h2> <br/>
           { /* TODO: Change the below <Switch> to change which controller the app uses, not which view. */ }
           <Switch>
+            <Route exact path='/' component= { HomeView } />
             <Route exact path='/profile/new' component={ UserCreateView } />
             <Route path='/profile/edit/:id' component={ UserEditView } />
             <Route exact path='/food/new' component={ FoodCreateView } />

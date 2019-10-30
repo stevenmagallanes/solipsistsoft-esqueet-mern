@@ -2,11 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
+import Login from './components/login.component';
+//import Auth from './util/auth0';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+//const auth = new Auth();
+
 ReactDOM.render(
     <BrowserRouter>
+    <Login />
     <App />
     </BrowserRouter>, document.getElementById('root'));
 
