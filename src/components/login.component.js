@@ -8,11 +8,6 @@ class Login extends Component {
         UserName: 'Friend'
     };
 
-    constructor(props){
-        super(props);
-        //this.setState({ UserName : 'Friend'});
-    }
-
     handleAuthentication = (hash) => {
         if (/access_token|id_token|error/.test(hash)) {
             this.auth.handleAuthentication();
@@ -29,7 +24,6 @@ class Login extends Component {
     }
 
     componentDidMount(){
-        let userName = 'Friend';
         if (window.location.pathname === '/auth-callback' && window.location.hash) {
             this.handleAuthentication(window.location.hash);
         }
