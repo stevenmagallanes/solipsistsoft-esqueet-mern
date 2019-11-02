@@ -10,12 +10,24 @@ export default class Auth {
     clientID: 'NbcWP2giDnwxrrZGnaH4nQz3wYNwvvFY',
     redirectUri: process.env.NODE_ENV === 'development' ? 'http://localhost:3000/auth-callback' : 'https://TODO-FIND-A-HOST.DOMAIN/callback',
     audience: 'com.solipsistsoft.esqueet.api',
-    responseType: 'token id_token',
+    responseType: 'id_token token',
     scope: 'openid'
   });
 
   login = () => {
     this.auth0.authorize();
+  }
+
+  validateAndGetUserId = (token) => {
+    this.auth0.parseHash((err, authResult) => {
+      if (authResult && authResult.accessToken && authResult.idToken) {
+        return authResult.idTokenPayload['sub'];
+      } else if (err) {
+        history.replace('/');
+        console.log(err);
+      }
+    });
+  
   }
 
   // parses the result after authentication from URL hash

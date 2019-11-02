@@ -14,8 +14,7 @@ let UserSchema = new Schema({
         required: true,
         unique: true
     },
-    PassSalt: String,
-    PassHash: String,
+    AuthenticationTokenId: String,
     FirstName: String,
     LastName: String,
     FoodPreferences: [foods.schema],

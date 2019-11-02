@@ -13,10 +13,10 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
-import Loading from './components/loading.component';
+import Login from './components/login.component';
+import HomeView from './views/home';
 
 // TODO: These views should be called in by their controllers, not by the main app.
-import HomeView from './views/home';
 import UserCreateView from './views/user.create';
 import UserEditView from './views/user.edit';
 import FoodCreateView from './views/food.create';
@@ -30,7 +30,8 @@ class App extends Component {
     return (
       <Router>
         <div className="container">
-          <nav className="navbar navbar-expand-lg navbar-light bg-light">
+         <Login />
+         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <Link to={'/'} className="navbar-brand">Esqueet</Link>
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto">

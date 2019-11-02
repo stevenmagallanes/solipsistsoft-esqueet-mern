@@ -1,4 +1,4 @@
-/*
+ /*
  * API Controller for User entity.
  * NOTES - Since I'm using an "IsActive" flag to keep my entities around, 
  * I'm having trouble deciding on whether or not I should be allowing my API
@@ -53,19 +53,21 @@ exports.index = function(req, res){
 // get individual user
 exports.view = function(req, res){
     let id = req.params.id;
-    User.findById(id, function(err, user){
+    User.find({ AuthenticationTokenId : id }, function(err, user){
         if(err){
             console.log(err);
         }
         else{
-            res.json(user);
+            if(user && user.length > 0)
+                res.json(user[0]);
         }
     });
 };
 
 // update user
 exports.update = function (req, res){
-    User.findById(req.params.id, function(err, user){
+    const id = req.params.id;
+    User.find({ AuthenticationTokenId : id }, function(err, user){
         if(!user)
             res.status(404).send("data is not found");
         else {
@@ -95,7 +97,8 @@ exports.update = function (req, res){
 
 // partial update user
 exports.updatePartial = function (req, res){
-    User.findById(req.params.id, function(err, user){
+    const id = req.params.id;
+    User.find({ AuthenticationTokenId : id },function(err, user){
         if(!user)
             res.status(404).send("data is not found");
         else {
@@ -126,7 +129,8 @@ exports.updatePartial = function (req, res){
 
 // delete user
 exports.delete = function(req, res){
-    User.findById({_id: req.params.id}, function(err, user){
+    let id = req.params.id;
+    User.find({ AuthenticationTokenId : id }, function(err, user){
         if(err) res.json(err);
         else {
             user.IsActive = false;

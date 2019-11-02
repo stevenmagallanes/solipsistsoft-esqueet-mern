@@ -15,6 +15,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
+    "generate-schema": "^2.6.0",
     "jwks-rsa": "^1.6.0",
     "mongoose": "^5.7.6",
     "mongoose-unique-validator": "^2.0.3",
