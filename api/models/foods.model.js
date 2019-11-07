@@ -8,13 +8,12 @@ let Food = new Schema({
         required: true,
         //unique:true
     },
-    FakeField: String,
     IsActive: {
         type: Boolean,
         default: true,
         required: true
     }
-},{
+}, {
     collection: 'foods'
 });
 //Food.plugin(uniqueFoodNameValidator);
