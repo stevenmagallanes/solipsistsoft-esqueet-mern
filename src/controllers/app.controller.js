@@ -5,6 +5,11 @@
  * authentication, navigation, etc live here.
  */
 
- export default class AppController {
+import LoginComponent from '../components/login.component';
 
- }
+export default class AppController {
+    constructor() {
+        this.loginComponent = new LoginComponent();
+    }
+
+}
