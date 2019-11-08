@@ -25,7 +25,7 @@ exports.new = function (req, res) {
 
     user.save(function (err) {
         if (err) {
-            res.status(400).send("unable to save to database:" + err);
+            res.status(409).send("unable to save to database:" + err);
         }
         else {
             res.status(200).json({ 'user': 'user in added successfully' });
@@ -140,7 +140,7 @@ exports.delete = function (req, res) {
 
 async function viewUserFoods(req, res) {
     const userId = req.params.userId;
-    const find = User.find({ AuthenticationTokenId: userId })
+    User.find({ AuthenticationTokenId: userId })
         .then(user => {
             res.json(user.FoodPreferences);
         })
@@ -151,7 +151,7 @@ function addUserFood(req, res) {
     const userId = req.params.userId;
     const foodId = req.params.foodId;
 
-    Food.findOne({ _id: foodId })
+    Food.findById(foodId)
         .then(food => {
             if (!food) {
                 res.status(404).json("No food found for id: [" + foodId + "]");
