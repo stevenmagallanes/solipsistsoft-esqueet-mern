@@ -1,5 +1,6 @@
 let router = require('express').Router();
 let entities = ['user', 'food', 'place'];
+let guard = require('express-jwt-permissions')();
 
 entities.forEach(ent => {
     var controller = require('../controllers/' + ent + 's.controller');
@@ -16,8 +17,25 @@ entities.forEach(ent => {
 
     if (controller.registerRoutes) {
         controller.registerRoutes().forEach(route => {
-            let r = router.route(route.path);
             route.actions.forEach(a => {
+                switch (a.verb) {
+                    case "get":
+                        router.get(route.path, guard.check(a.permission));
+                        break;
+                    case "post":
+                        router.post(route.path, guard.check(a.permission));
+                        break;
+                    case "delete":
+                        router.delete(route.path, guard.check(a.permission));
+                        break;
+                    case "put":
+                    case "patch":
+                        router.put(route.path, guard.check(a.permission));
+                        break;
+                    default:
+                        break;
+                }
+                let r = router.route(route.path);
                 switch (a.verb) {
                     case "get":
                         r.get(a.action);

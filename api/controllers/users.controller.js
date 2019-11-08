@@ -202,12 +202,12 @@ exports.registerRoutes = function () {
                 {
                     'verb': 'get',
                     'action': viewUserFoods,
-                    'permission': 'user:viewFoods'
+                    'permission': 'edit:selfPreferences'
                 },
                 {
                     'verb': 'post',
                     'action': addUserFood,
-                    'permission': 'user:addFood'
+                    'permission': 'edit:selfPreferences'
                 },
             ]
         },
@@ -217,12 +217,12 @@ exports.registerRoutes = function () {
                 {
                     'verb': 'post',
                     'action': addUserFood,
-                    'permission': 'user:addFood'
+                    'permission': 'edit:selfPreferences'
                 },
                 {
                     'verb': 'delete',
                     'action': removeUserFood,
-                    'permission': 'user:removeFood'
+                    'permission': 'edit:selfPreferences'
                 },
 
             ]
@@ -233,7 +233,7 @@ exports.registerRoutes = function () {
                 {
                     'verb': 'get',
                     'action': viewUserGroups,
-                    'permission': 'user:viewGroups'
+                    'permission': 'edit:selfPreferences'
                 }
             ]
         }

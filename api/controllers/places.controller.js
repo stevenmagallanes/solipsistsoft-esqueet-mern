@@ -140,12 +140,12 @@ exports.registerRoutes = function () {
                 {
                     'verb': 'get',
                     'action': viewPlaceFoods,
-                    'permission': 'place:viewFoods'
+                    'permission': 'view:places'
                 },
                 {
                     'verb': 'post',
                     'action': addPlaceFood,
-                    'permission': 'place:addFood'
+                    'permission': 'edit:places'
                 },
             ]
         },
@@ -155,12 +155,12 @@ exports.registerRoutes = function () {
                 {
                     'verb': 'post',
                     'action': addPlaceFood,
-                    'permission': 'place:addFood'
+                    'permission': 'edit:places'
                 },
                 {
                     'verb': 'delete',
                     'action': removePlaceFood,
-                    'permission': 'place:removeFood'
+                    'permission': 'edit:places'
                 },
 
             ]

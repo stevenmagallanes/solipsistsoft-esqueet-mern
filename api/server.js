@@ -70,9 +70,14 @@ var jwtCheck = jwt({
 
 app.use(jwtCheck);
 
-app.get('/authorized', function (req, res) {
-  res.send('Secured Resource');
-});
+let guard = require('express-jwt-permissions')();
+
+// a little debugging:
+// app.use(function (req, res, next) {
+//   if (req.user.permissions.length > 0) {
+//     console.log(req.user.permissions);
+//   }
+// });
 
 // Set up our http server
 // Create our API mappings
