@@ -1,13 +1,13 @@
 {
-	"folders": [
-		{
-			"path": "public"
-		},
-		{
-			"path": "src"
-		},
-		{
-			"path": "api"
-		}
-	]
+  "folders": [
+    {
+      "path": "public"
+    },
+    {
+      "path": "src"
+    },
+    {
+      "path": "C:\\Users\\pocke\\dev\\solipsistsoft-esqueet-api"
+    }
+  ]
 }
